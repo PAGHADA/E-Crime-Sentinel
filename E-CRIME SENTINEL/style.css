@@ -1,0 +1,309 @@
+/* === E-Crime Sentinel: Dark Mode UI === */
+
+/* 1. Global Variables (Dark Mode Palette) */
+:root {
+    --color-background: #0d1117;  /* GitHub Dark Background */
+    --color-foreground: #161b22;  /* GitHub Dark Foreground */
+    --color-text-primary: #e6edf3;     /* Off-white Text */
+    --color-text-secondary: #7d8590;   /* Dim Gray Text */
+    --color-link: #58a6ff;             /* Bright Blue Link */
+    --color-link-hover: #79c0ff;       /* Lighter Blue Hover */
+    --color-button: #238636;           /* Green Button */
+    --color-button-hover: #2ea043;     /* Lighter Green Hover */
+    --color-border: #30363d;           /* Subtle Border */
+    --color-border-focus: #58a6ff;     /* Blue Focus Border */
+    --color-destructive: #da3633;      /* Red for Delete */
+    --color-destructive-hover: #f85149;/* Lighter Red Hover */
+    --color-header-bg: rgba(13, 17, 23, 0.8);
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+/* 2. Animations Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 3. Global Resets & Typography */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-foreground); /* Slightly lighter for input fields */
+    color: var(--color-text-primary);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    animation: fadeIn 0.5s ease-in-out;
+    padding-top: 60px; /* header height */
+    padding-bottom: 80px; /* footer height */
+}
+
+h1, h2, h3 { font-weight: 600; margin-bottom: 0.75em; }
+h1 { font-size: 2.5rem; }
+h2 { font-size: 1.75rem; letter-spacing: -0.01em; }
+p {
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+    max-width: 65ch;
+}
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+a:hover { color: var(--color-link-hover); }
+
+/* 4. Header & Navigation */
+header {
+    background-color: var(--color-header-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+header h1 { font-size: 1.3rem; margin: 0; }
+header h1 a { color: var(--color-text-primary); transition: color 0.2s; }
+header h1 a:hover { color: #fff; text-decoration: none; }
+
+nav { display: flex; gap: 1.5rem; }
+nav a {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    padding: 4px 0;
+    position: relative;
+}
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-link);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease-out;
+}
+nav a:hover::after,
+nav a.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+nav a:hover, nav a.active {
+    color: var(--color-text-primary);
+    text-decoration: none;
+}
+
+/* 5. Layout Containers & Panels */
+.form-container,
+.content-panel,
+.info-box {
+    background-color: var(--color-foreground);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px var(--shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.form-container:hover,
+.content-panel:hover,
+.info-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px var(--shadow-color);
+}
+.form-container, .content-panel {
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 550px;
+    margin: 3rem auto;
+    padding-bottom: 5rem; /* Prevent footer overlap */
+}
+.content-panel { max-width: 1200px; }
+.body-center-panel { padding: 20px; }
+
+
+/* 6. Hero Section */
+.hero {
+    text-align: center;
+    padding: 6rem 1.5rem;
+}
+.hero h2, .hero p, .hero .btn {
+    animation: slideInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+.hero h2 { font-size: 3.5rem; }
+.hero p { animation-delay: 0.1s; max-width: 600px; margin: 1rem auto 2rem; font-size: 1.1rem; }
+.hero .btn:nth-of-type(1) { animation-delay: 0.2s; }
+.hero .btn:nth-of-type(2) { animation-delay: 0.3s; }
+
+
+/* 7. Forms & Inputs */
+form label {
+    display: block;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    margin-top: 1.2rem;
+}
+
+input[type="text"], input[type="email"], input[type="tel"],
+input[type="password"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: brightness(0.7) invert(0.9) sepia(0.2) saturate(1.2);
+    opacity: 1;
+    border: 1px solid var(--color-border);
+    background: var(--color-foreground);
+    border-radius: 6px;
+    padding: 4px;
+    width: 28px;
+    height: 28px;
+    box-shadow: 0 0 6px rgba(20,20,20,0.18);
+}
+
+input[type="date"]::-ms-input-placeholder {
+    color: var(--color-text-primary);
+}
+input[type="date"]::-moz-placeholder {
+    color: var(--color-text-primary);
+}
+input[type="date"]::placeholder {
+    color: var(--color-text-primary);
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+}
+textarea { min-height: 120px; resize: vertical; }
+.gender-options { display: flex; gap: 20px; margin-top: 10px; }
+.gender-options label { margin: 0; display: flex; align-items: center; cursor: pointer; font-weight: 400; font-size: 1rem; }
+.gender-options input[type="radio"] { margin-right: 8px; }
+
+/* 8. Buttons */
+button, .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-button);
+    color: #fff;
+    border: 1px solid rgba(240, 246, 252, 0.1);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 25px;
+    transform: perspective(1px) translateZ(0);
+    transition: transform 0.2s ease-out, background-color 0.2s ease-out;
+}
+button:hover, .btn:hover {
+    background-color: var(--color-button-hover);
+    transform: scale(1.02);
+    text-decoration: none;
+    color: #fff;
+}
+.hero .btn { width: auto; padding: 12px 25px; }
+.delete-btn { background-color: var(--color-destructive); padding: 8px 16px; font-size: 0.9rem; width: auto; }
+.delete-btn:hover { background-color: var(--color-destructive-hover); }
+.logout-btn { background-color: var(--color-text-secondary); }
+.logout-btn:hover { background-color: var(--color-text-primary); color: var(--color-background); }
+
+
+/* 9. Tables */
+.table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+}
+.data-table, .details-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+.data-table th, .data-table td,
+.details-table th, .details-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+.data-table tr:last-child td, .details-table tr:last-child th, .details-table tr:last-child td { border-bottom: none; }
+.data-table th, .details-table th { font-weight: 600; background-color: #1c222b; }
+.details-table th { width: 30%; color: var(--color-text-secondary); }
+.data-table tbody tr {
+    opacity: 0;
+    animation: slideInUp 0.5s ease-out forwards;
+}
+/* Staggered animation for table rows */
+.data-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.data-table tbody tr:nth-child(2) { animation-delay: 0.15s; }
+.data-table tbody tr:nth-child(3) { animation-delay: 0.2s; }
+.data-table tbody tr:nth-child(4) { animation-delay: 0.25s; }
+.data-table tbody tr:nth-child(5) { animation-delay: 0.3s; }
+/* ...and so on for more rows if needed */
+
+/* 10. Info Boxes */
+.info-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.info-box { padding: 30px; }
+.info-box h2 { font-size: 1.5rem; }
+
+/* 11. Footer */
+footer {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--color-header-bg);
+    z-index: 100;
+    height: 80px;
+}

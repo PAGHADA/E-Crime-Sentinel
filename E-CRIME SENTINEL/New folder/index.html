@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>E-Crime Sentinel - Home</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="/lenis-init.js"></script>
+</head>
+
+<body>
+
+<header>
+    <h1><a href="index.html" class="site-title">E-Crime Sentinel</a></h1>
+    <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="login.php">Login</a>
+        <a href="register.html">Register</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Welcome to E-Crime Sentinel</h2>
+    <p>
+        E-Crime Sentinel is your trusted platform for reporting and tracking cybercrime cases.
+        Whether you are a citizen or an administrator, our portal ensures transparency, efficiency,
+        and security in managing your complaints.
+    </p>
+    <p>Please login or register to continue.</p>
+    <button class="btn" onclick="location.href='register.html'">Report a Crime</button>
+    <button class="btn" onclick="location.href='login.html'">Login</button>
+</section>
+
+<!-- Info Boxes Section -->
+<section class="info-boxes">
+    <div class="info-box">
+        <h2>About Us</h2>
+        <p>
+            E-Crime Sentinel is dedicated to providing a safe and secure platform for citizens
+            to report and track cybercrimes. We aim to bridge the gap between law enforcement
+            and the public, ensuring timely responses and transparent follow-ups.
+        </p>
+    </div>
+    <div class="info-box">
+        <h2>Contact Us</h2>
+        <p>
+            Have questions or concerns? Our team is here to help.<br />
+            Email: <a href="mailto:support@ecrimesentinel.com">support@ecrimesentinel.com</a><br />
+            Phone: <strong>+91 98765 43210</strong>
+        </p>
+    </div>
+    <div class="info-box">
+        <h2>Report a Crime</h2>
+        <p>
+            If you have witnessed or experienced a cybercrime, report it immediately using our secure form.
+            Your identity will remain confidential, and your case will be handled with the utmost care.
+        </p>
+        <a href="report.html" class="btn">Report Now</a>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2025 E-Crime Sentinel. All rights reserved.</p>
+</footer>
+
+<script>
+    document.querySelectorAll('.info-box').forEach(box => {
+        box.onmousemove = function(e) {
+            const rect = box.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            box.style.setProperty('--x', `${x}px`);
+            box.style.setProperty('--y', `${y}px`);
+        }
+    });
+</script>
+
+</body>
+</html>

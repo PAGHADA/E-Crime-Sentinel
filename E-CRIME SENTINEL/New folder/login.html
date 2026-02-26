@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>E-Crime Sentinel - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="/lenis-init.js"></script>
+
+</head>
+
+
+<body>
+
+    <header>
+        <h1><a href="index.html" class="site-title">E-Crime Sentinel</h1></a></h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html" class="active">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+
+    <main class="form-container">
+        <h2>Login</h2>
+        <form action="login.php" method="POST">
+            <label for="username"> Username:</label>
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <small style="color:#b0b0b0;display:block;margin-top:4px;">Admins should include <code>.sentinel</code> at the end of their username.</small>
+
+            <label for="password"> Password:</label>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p>Don't have an account? <a href="register.html">Register here</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 E-Crime Sentinel. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>
