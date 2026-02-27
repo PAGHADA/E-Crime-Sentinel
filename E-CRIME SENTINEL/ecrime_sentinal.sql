@@ -39,7 +39,8 @@ CREATE TABLE `complaints` (
   `complaint_type` enum('hacking','financialFraud','socialMediaHarassment') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` enum('pending','solved','denied') NOT NULL DEFAULT 'pending',
-  `denial_reason` text DEFAULT NULL
+  `denial_reason` text DEFAULT NULL,
+  `solved_comment` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

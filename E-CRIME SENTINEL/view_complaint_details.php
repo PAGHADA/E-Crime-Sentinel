@@ -119,10 +119,10 @@ $complaint = $result->fetch_assoc();
                     <p><strong>Reason:</strong> <?php echo htmlspecialchars($complaint['denial_reason']); ?></p>
                 </div>
             <?php elseif (strtolower(trim($complaint['status'] ?? '')) == 'solved'): ?>
-                <div class="status-box" style="border-color: var(--success); background: rgba(76, 175, 80, 0.1);">
-                    <h3 style="color: var(--success);">Case Solved</h3>
-                    <p><?php echo htmlspecialchars($complaint['solved_comment']); ?></p>
-                </div>
+                    <div class="status-box" style="border-color: var(--success); background: rgba(76, 175, 80, 0.1);">
+                        <h3 style="color: var(--success);">Case Solved</h3>
+                        <p><?php echo htmlspecialchars(isset($complaint['solved_comment']) ? $complaint['solved_comment'] : ''); ?></p>
+                    </div>
             <?php endif; ?>
 
             <div style="margin-top: 2rem; text-align: center;">

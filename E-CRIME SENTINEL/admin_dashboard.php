@@ -2,6 +2,10 @@
 session_start();
 include 'db_connect.php';
 
+// detect if the complaints table has the optional `solved_comment` column
+$colRes = $conn->query("SHOW COLUMNS FROM complaints LIKE 'solved_comment'");
+$hasSolvedComment = ($colRes && $colRes->num_rows > 0);
+
 // only administrators may access this page
 if (!isset($_SESSION['username'])) {
     header('Location: login.html');
@@ -32,11 +36,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $updateStmt = $conn->prepare($updateSql);
             $updateStmt->bind_param("ssi", $status, $denial_reason, $complaint_id);
         } elseif ($status === 'solved' && $solved_comment) {
-            $updateSql = "UPDATE complaints SET status = ?, solved_comment = ? WHERE complaint_id = ?";
-            $updateStmt = $conn->prepare($updateSql);
-            $updateStmt->bind_param("ssi", $status, $solved_comment, $complaint_id);
+            if ($hasSolvedComment) {
+                $updateSql = "UPDATE complaints SET status = ?, solved_comment = ? WHERE complaint_id = ?";
+                $updateStmt = $conn->prepare($updateSql);
+                $updateStmt->bind_param("ssi", $status, $solved_comment, $complaint_id);
+            } else {
+                // fallback: update status only when DB doesn't have solved_comment
+                $updateSql = "UPDATE complaints SET status = ? WHERE complaint_id = ?";
+                $updateStmt = $conn->prepare($updateSql);
+                $updateStmt->bind_param("si", $status, $complaint_id);
+            }
         } else {
-            $updateSql = "UPDATE complaints SET status = ?, denial_reason = NULL, solved_comment = NULL WHERE complaint_id = ?";
+            if ($hasSolvedComment) {
+                $updateSql = "UPDATE complaints SET status = ?, denial_reason = NULL, solved_comment = NULL WHERE complaint_id = ?";
+            } else {
+                $updateSql = "UPDATE complaints SET status = ?, denial_reason = NULL WHERE complaint_id = ?";
+            }
             $updateStmt = $conn->prepare($updateSql);
             $updateStmt->bind_param("si", $status, $complaint_id);
         }
@@ -454,7 +469,7 @@ if ($current_view === 'users') {
                                         </td>
                                     <?php elseif ($current_view === 'solved'): ?>
                                         <td style="color: #28a745; font-style: italic; font-size: 0.9rem; line-height: 1.4;">
-                                            <?php echo htmlspecialchars($complaint['solved_comment']); ?>
+                                            <?php echo htmlspecialchars(isset($complaint['solved_comment']) ? $complaint['solved_comment'] : ''); ?>
                                         </td>
                                     <?php elseif ($current_view === 'denied'): ?>
                                         <td style="color: #ff6b6b; font-style: italic; font-size: 0.9rem; line-height: 1.4;">
